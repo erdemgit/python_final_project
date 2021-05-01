@@ -1,47 +1,50 @@
 from random import choice
 
 def main():
-    app_flow()
+    bet = 0
+    dest = {
+        "A": [11, 4], "2": [2, 4], "3": [3, 4], "4": [4, 4], "5": [5, 4], "6": [6, 4], "7": [7, 4], "8": [8, 4], "9": [9, 4], 
+        "1": [10, 4], "J": [10, 4], "Q": [10, 4], "K": [10, 4]
+        }
+    cards = "A234567891JQK"
+    bet = takethebet()
+    player_hand = firsthand(cards, dest)
+    if isitblackjack(player_hand): playerwins(bet) 
+    case_hand = firsthand(cards, dest)
+    if isitblackjack(case_hand): casewins(bet)
+    print("{}".format(case_hand[0]))
+    exit()
 
-def app_flow():
-    """balance = int(input("How much money you want to invest: "))
-    bet = int(input("How much you want to bet: "))
-    balance -= bet"""
-    game()
-    
-def game():
-    deck = {
-        "A":11, "2":2, "3":3, "4":4, "5":5, "6":6, "7":7, "8":8, "9":9, "10":10, "J":10, "Q":10, "K":10
-    }
-    deck_string = "A2345678910JQK"
-    player_hand = choice(deck_string) + choice(deck_string)
-    if isitbj(player_hand):
-        print("blackjack")
-        print("{}: {}".format(player_hand, handscore(deck, player_hand)))
-    print(handscore(deck, player_hand))
-    case_hand = choice(deck_string) + choice(deck_string)
-    if isitbj(case_hand):
-        print("blackjack")
-        print("{}: {}".format(case_hand, handscore(deck, case_hand)))
-    print(handscore(deck, case_hand))
-    task = input("Do you want to draw card: ")
+def casewins(bet):
+    print("Sorry, you just lost: {}".format(bet))
+    exit()
 
-    
-    
-def isitbj(hand):
-    if "A" in hand:
-        for card in "JQK":
-            if card in hand:
-                return True
+def playerwins(bet):
+    print("You won {}".format(bet*2))
+    exit()
+
+def isitblackjack(hand):
+    if "A" == hand[0]:
+        if hand[1] in "1JQK":
+            print("Blackjack: {}".format(hand))
+            return True
+    elif "A" == hand[1]:
+        if hand[0] in "1JQK":
+            print("Blackjack: {}".format(hand))
+            return True
     return False
 
-def handscore(deck, hand):
-    score = 0
-    for card in hand:
-        score += deck[card]
-    return score
+def firsthand(cards, dest):
+    hand = ""
+    for _ in range(2):
+        card = choice(cards)
+        if dest[card][1] > 0:
+            hand += card
+            dest[card][1] -= 1
+    return hand
 
-def player_wonned()        
-    
+def takethebet():
+    return int(input("Welcome, bet please: "))
 
 main()
+
